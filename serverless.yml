@@ -1,0 +1,134 @@
+org: santo097
+app: app-muncher
+service: app-muncher
+frameworkVersion: '2 || 3'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  # region: us-east-1
+  apiGateway:
+    shouldStartNameWithService: true
+
+plugins:
+  - serverless-offline
+
+functions:
+
+  # GET ALL DATA
+
+  Users:
+    handler: src/controller/UsersController.getUsers
+    events:
+      - httpApi:
+          path: /users
+          method: get
+  Transfer:
+    handler: src/controller/TransferController.getTransfers
+    events:
+      - httpApi:
+          path: /transfer
+          method: get
+  Order:
+    handler: src/controller/OrderController.getOrders
+    events:
+      - httpApi:
+          path: /order
+          method: get
+  Products:
+    handler: src/controller/ProductController.getProducts
+    events:
+      - httpApi:
+          path: /products
+          method: get
+
+  # GET BY ID
+
+  getOrderById:
+    handler: src/controller/OrderController.getOrderById
+    events:
+      - httpApi:
+          path: /order/{id}
+          method: get
+  getUserById:
+    handler: src/controller/UsersController.getUserById
+    events:
+      - httpApi:
+          path: /user/{id}
+          method: get
+  getTransferById:
+    handler: src/controller/TransferController.getTransferById
+    events:
+      - httpApi:
+          path: /transfer/{id}
+          method: get
+  getProductById:
+    handler: src/controller/ProductController.getProductById
+    events:
+      - httpApi:
+          path: /product/{id}
+          method: get
+ 
+# ADD DATA
+
+  CreateOrder:
+    handler: src/controller/OrderController.CreateOrder
+    events:
+      - httpApi:
+         path: /createOrder/{id}
+         method: POST
+  CreateProduct:
+    handler: src/controller/ProductController.CreateProduct
+    events:
+      - httpApi:
+         method: POST
+         path: /createProduct
+  CreateTransfer:
+    handler: src/controller/TransferController.CreateTransfer
+    events:
+      - httpApi:
+         path: /createTransfer/{id}
+         method: post
+  CreateUser:
+    handler: src/controller/UsersController.CreateUser
+    events:
+      - httpApi:
+         path: /createuser
+         method: post
+  
+  # UPDATE DATA
+
+  UpdateOrder:
+    handler: src/controller/OrderController.UpdateOrder
+    events:
+      - httpApi:
+         path: /updateorder/{id}
+         method: put
+  UpdateProduct:
+    handler: src/controller/ProductController.UpdateProduct
+    events:
+      - httpApi:
+         path: /updateproduct/{id}
+         method: put
+
+#  DELETE DATA
+
+  DeleteProduct:
+    handler: src/controller/ProductController.DeleteProduct
+    events:
+      - httpApi:
+         path: /deleteproduct/{id}
+         method: delete
+  IniciarSesion:
+    handler: src/controller/UsersController.Login
+    events:
+      - httpApi:
+         path: /login
+         method: post
+  AddBalance:
+    handler: src/controller/UsersController.AddBalance
+    events:
+      - httpApi:
+         path: /addbalance/{id}
+         method: post
